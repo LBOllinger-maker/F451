@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fahrenheit 451 — Gallery Walk Stations</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=EB+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@400;600;700;900&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: #2a2a2a;
+    font-family: 'EB Garamond', Georgia, serif;
+  }
+
+  /* Print instructions */
+  .print-note {
+    background: #fff3cd;
+    border-left: 6px solid #C0562A;
+    padding: 18px 24px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 14px;
+    color: #333;
+    margin: 20px;
+    border-radius: 4px;
+  }
+  .print-note strong { color: #C0562A; }
+
+  /* Each station is a full-page card */
+  .station {
+    width: 8.5in;
+    min-height: 11in;
+    margin: 20px auto;
+    position: relative;
+    overflow: hidden;
+    page-break-after: always;
+    page-break-inside: avoid;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── DARK stations ── */
+  .station.dark {
+    background: #1C1C1E;
+    color: #D4C4B0;
+  }
+  .station.dark .station-header {
+    background: #C0562A;
+  }
+
+  /* ── LIGHT stations ── */
+  .station.light {
+    background: #F5EDD6;
+    color: #1C1C1E;
+  }
+  .station.light .station-header {
+    background: #1C1C1E;
+    color: #D4C4B0;
+  }
+
+  /* ── EMBER stations ── */
+  .station.ember {
+    background: #C0562A;
+    color: #F5EDD6;
+  }
+  .station.ember .station-header {
+    background: #8B1A00;
+    color: #F5EDD6;
+  }
+
+  .station-header {
+    padding: 18px 36px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .station-num {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    opacity: 0.85;
+  }
+  .station-type {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+
+  .station-body {
+    flex: 1;
+    padding: 44px 52px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  /* Quote styling */
+  .big-quote {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 32px;
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.5;
+    margin-bottom: 24px;
+    flex: 1;
+  }
+  .big-quote.smaller { font-size: 26px; }
+  .big-quote.smallest { font-size: 22px; }
+
+  .quotemark {
+    font-size: 120px;
+    line-height: 0.7;
+    font-family: 'Playfair Display', serif;
+    display: block;
+    margin-bottom: 16px;
+    opacity: 0.25;
+  }
+
+  .attribution {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    opacity: 0.8;
+  }
+  .attribution-detail {
+    font-family: 'EB Garamond', serif;
+    font-size: 15px;
+    font-style: italic;
+    opacity: 0.65;
+    margin-bottom: 32px;
+  }
+
+  /* Image placeholder (for teacher to add image) */
+  .image-area {
+    border: 2px dashed;
+    border-radius: 4px;
+    padding: 20px;
+    text-align: center;
+    margin: 20px 0 28px;
+    opacity: 0.5;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    letter-spacing: 1px;
+  }
+  .dark .image-area { border-color: #C0562A; color: #C0562A; }
+  .light .image-area { border-color: #C0562A; color: #C0562A; }
+  .ember .image-area { border-color: #F5EDD6; color: #F5EDD6; }
+
+  .image-area-inner {
+    padding: 30px 0;
+  }
+  .image-area-icon { font-size: 48px; display: block; margin-bottom: 12px; }
+  .image-area-label { font-size: 13px; font-weight: 700; display: block; margin-bottom: 6px; }
+  .image-area-sub { font-size: 11px; opacity: 0.8; }
+
+  /* Context box */
+  .context-box {
+    border-left: 4px solid;
+    padding: 16px 20px;
+    margin-bottom: 28px;
+    font-size: 17px;
+    line-height: 1.65;
+  }
+  .dark .context-box { border-color: #C0562A; background: rgba(192,86,42,0.1); }
+  .light .context-box { border-color: #C0562A; background: rgba(192,86,42,0.08); }
+  .ember .context-box { border-color: #F5EDD6; background: rgba(245,237,214,0.15); }
+
+  .context-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 8px;
+    opacity: 0.7;
+  }
+
+  /* Response prompts at the bottom */
+  .response-section {
+    margin-top: auto;
+    padding-top: 28px;
+  }
+  .response-bar {
+    height: 3px;
+    width: 100%;
+    margin-bottom: 20px;
+    opacity: 0.4;
+  }
+  .dark .response-bar { background: #C0562A; }
+  .light .response-bar { background: #1C1C1E; }
+  .ember .response-bar { background: #F5EDD6; }
+
+  .response-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+    opacity: 0.6;
+  }
+  .response-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 12px;
+  }
+  .response-card {
+    padding: 14px;
+    border-radius: 4px;
+  }
+  .dark .response-card   { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); }
+  .light .response-card  { background: rgba(0,0,0,0.06); border: 1px solid rgba(0,0,0,0.12); }
+  .ember .response-card  { background: rgba(0,0,0,0.12); border: 1px solid rgba(0,0,0,0.15); }
+
+  .response-card-label {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 8px;
+  }
+  .dark  .response-card-label { color: #C0562A; }
+  .light .response-card-label { color: #C0562A; }
+  .ember .response-card-label { color: #F5EDD6; }
+
+  .response-card-q {
+    font-family: 'EB Garamond', serif;
+    font-size: 14px;
+    font-style: italic;
+    line-height: 1.5;
+    opacity: 0.8;
+  }
+
+  /* Accent decorations */
+  .corner-accent {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 120px;
+    height: 120px;
+    opacity: 0.07;
+  }
+  .flame-decor {
+    position: absolute;
+    top: 60px;
+    right: 40px;
+    font-size: 180px;
+    opacity: 0.04;
+    line-height: 1;
+    pointer-events: none;
+  }
+
+  .accent-left {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 8px;
+    height: 100%;
+  }
+  .dark .accent-left  { background: #C0562A; }
+  .light .accent-left { background: #C0562A; }
+  .ember .accent-left { background: #8B1A00; }
+
+  /* Sticky note prompt */
+  .sticky-prompt {
+    display: inline-block;
+    background: #FFF9C4;
+    border-bottom: 3px solid #D4BE00;
+    padding: 6px 14px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: #333;
+    border-radius: 2px;
+    margin-bottom: 18px;
+    transform: rotate(-1.5deg);
+    box-shadow: 2px 2px 6px rgba(0,0,0,0.18);
+  }
+
+  @media print {
+    body { background: white; }
+    .print-note { display: none; }
+    .station { margin: 0; width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<div class="print-note">
+  <strong>TEACHER INSTRUCTIONS:</strong> Print each station on a separate sheet of paper (US Letter, color). Post around the room before students arrive. Provide sticky notes in 3 colors for What / So What / Now What responses, or use the companion response sheet. <strong>Stations 1, 3, 5, 7</strong> are designed for posted quotes; <strong>Stations 2, 4, 6, 8</strong> include image placeholders — print your chosen images and attach, or display digitally. Suggested search terms are included on each image station.
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     STATION 1 — Heinrich Heine Quote (1820)
+══════════════════════════════════════════════════════════════ -->
+<div class="station dark">
+  <div class="accent-left"></div>
+  <div class="flame-decor">🔥</div>
+
+  <div class="station-header">
+    <span class="station-num">Station 01</span>
+    <span class="station-type">Primary Quote</span>
+  </div>
+
+  <div class="station-body">
+    <div>
+      <span class="quotemark">"</span>
+      <div class="big-quote">
+        Where they burn books, they will ultimately burn people also.
+      </div>
+
+      <div class="attribution">— Heinrich Heine</div>
+      <div class="attribution-detail">German-Jewish poet, 1820 — from his play <em>Almansor</em></div>
+
+      <div class="context-box">
+        <div class="context-label">Historical Context</div>
+        Heine wrote this in 1820, referring to the burning of the Quran during the Spanish Inquisition. More than 100 years later, the Nazis burned his books in the same square where he had written these words. Heine was Jewish. Six million Jews were later murdered in the Holocaust.
+      </div>
+    </div>
+
+    <div class="response-section">
+      <div class="sticky-prompt">📌 Use a sticky note to respond below each question</div>
+      <div class="response-bar"></div>
+      <div class="response-label">Your Response — What? / So What? / Now What?</div>
+      <div class="response-grid">
+        <div class="response-card">
+          <div class="response-card-label">🔍 WHAT?</div>
+          <div class="response-card-q">What is Heine saying? What is the connection he's drawing?</div>
+        </div>
+        <div class="response-card">
+          <div class="response-card-label">💡 SO WHAT?</div>
+          <div class="response-card-q">Why did his prediction come true? What does this tell us about the relationship between ideas and violence?</div>
+        </div>
+        <div class="response-card">
+          <div class="response-card-label">🌍 NOW WHAT?</div>
+          <div class="response-card-q">How does this quote apply to today? Can you think of a modern parallel?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     STATION 2 — Nazi Book Burning Image (1933)
+══════════════════════════════════════════════════════════════ -->
+<div class="station light">
+  <div class="accent-left"></div>
+
+  <div class="station-header">
+    <span class="station-num">Station 02</span>
+    <span class="station-type">Historical Image</span>
+  </div>
+
+  <div class="station-body">
+    <div>
+      <div class="image-area">
+        <div class="image-area-inner">
+          <span class="image-area-icon">📷</span>
+          <span class="image-area-label">ATTACH IMAGE HERE</span>
+          <span class="image-area-sub">Search: "Nazi book burning Berlin 1933 Bebelplatz"<br>or "Nazi book burning crowd torchlight"<br>Source: United States Holocaust Memorial Museum (ushmm.org) — free for education</span>
+        </div>
+      </div>
+
+      <div class="context-box">
+        <div class="context-label">What You're Looking At</div>
+        On the night of May 10, 1933, members of the Nazi Student Union and the Hitler Youth gathered in Berlin's Bebelplatz square and burned more than 25,000 books. The books targeted included works by Jewish authors, political opponents, and anyone the Nazi regime considered "un-German." Joseph Goebbels, Nazi Minister of Propaganda, gave a speech at the bonfire. The burnings occurred in 34 university towns across Germany that same night.
+      </div>
+
+      <div style="font-family: 'Playfair Display', serif; font-size: 20px; font-style: italic; line-height: 1.6; color: #1C1C1E; margin-bottom: 8px;">
+        "These flames do not only illuminate the final end of an old era; they also light up the new."
+      </div>
+      <div style="font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; color: #C0562A; letter-spacing: 1px;">— Joseph Goebbels, May 10, 1933</div>
+    </div>
+
+    <div class="response-section">
+      <div class="sticky-prompt">📌 Use a sticky note to respond below each question</div>
+      <div class="response-bar"></div>
+      <div class="response-label">Your Response — What? / So What? / Now What?</div>
+      <div class="response-grid">
+        <div class="response-card">
+          <div class="response-card-label">🔍 WHAT?</div>
+          <div class="response-card-q">Describe what you see. Who is there? What is the atmosphere like?</div>
+        </div>
+        <div class="response-card">
+          <div class="response-card-label">💡 SO WHAT?</div>
+          <div class="response-card-q">Why books? What threat did written ideas pose to the Nazi regime?</div>
+        </div>
+        <div class="response-card">
+          <div class="response-card-label">🌍 NOW WHAT?</div>
+          <div class="response-card-q">Does Goebbels' quote remind you of anything in Fahrenheit 451?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     STATION 3 — Bradbury Quote on Television
+══════════════════════════════════════════════════════════════ -->
+<div class="station ember">
+  <div class="accent-left"></div>
+  <div class="flame-decor">📺</div>
+
+  <div class="station-header">
+    <span class="station-num">Station 03</span>
+    <span class="station-type">Author's Words</span>
+  </div>
+
+  <div class="station-body">
+    <div>
+      <span class="quotemark" style="color: #F5EDD6;">"</span>
+      <div class="big-quote" style="color: #F5EDD6;">
+        Television gives you the dates of Napoleon but not who he was as a human. It gives you William Shakespeare, but it doesn't follow you through the night and let you walk the fields with him, it doesn't let you smell thosefields, or touch that network of friends, or talk with him about his ideas.
+      </div>
+
+      <div class="attribution" style="color: #F5EDD6;">— Ray Bradbury</div>
+      <div class="attribution-detail" style="color: rgba(245,237,214,0.75);">From an interview, 2010 — Bradbury refused to convert F451 to an e-book until shortly before his death</div>
+
+      <div class="context-box" style="border-color: rgba(245,237,214,0.5); background: rgba(0,0,0,0.15);">
+        <div class="context-label" style="color: rgba(245,237,214,0.7);">Think About It</div>
+        <span style="color: rgba(245,237,214,0.9);">Bradbury wrote Fahrenheit 451 partly as a reaction to the rise of television in the 1950s. He believed TV was creating a culture that preferred speed and images over the slow, deep engagement required by books. In the novel, Mildred spends her days watching the "parlor walls" — massive interactive screens. Bradbury called it "social happiness."</span>
+      </div>
+    </div>
+
+    <div class="response-section">
+      <div class="sticky-prompt" style="transform: rotate(1deg);">📌 Use a sticky note to respond below each question</div>
+      <div class="response-bar"></div>
+      <div class="response-label" style="color: rgba(245,237,214,0.6);">Your Response — What? / So What? / Now What?</div>
+      <div class="response-grid">
+        <div class="response-card">
+          <div class="response-card-label">🔍 WHAT?</div>
+          <div class="response-card-q" style="color: rgba(245,237,214,0.85);">What specific difference does Bradbury identify between books and TV?</div>
+        </div>
+        <div class="response-card">
+          <div class="response-card-label">💡 SO WHAT?</div>
+          <div class="response-card-q" style="color: rgba(245,237,214,0.85);">Do you agree with Bradbury? Is something lost when we learn from screens rather than books?</div>
+        </div>
+        <div class="response-card">
+          <div class="response-card-label">🌍 NOW WHAT?</div>
+          <div class="response-card-q" style="color: rgba(245,237,214,0.85);">Does social media or streaming fit Bradbury's critique? How is today different from 1953?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     STATION 4 — Banned Books Image / Data Visual
+══════════════════════════════════════════════════════════════ -->
+<div class="station dark">
+  <div class="accent-left"></div>
+
+  <div class="station-header">
+    <span class="station-num">Station 04</span>
+    <span class="station-type">Data & Image</span>
+  </div>
+
+  <div class="station-body">
+    <div>
+      <div class="image-area">
+        <div class="image-area-inner">
+          <span class="image-area-icon">📷</span>
+          <span class="image-area-label">ATTACH IMAGE OR DATA VISUAL HERE</span>
+          <span class="image-area-sub">Option A: Search "banned books display library" or "banned books week ALA"<br>Option B: Print the ALA's most-challenged books list chart (ala.org) — it's freely available<br>Option C: Print PEN America's "Book Bans Rising" report cover graphic</span>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-bottom: 24px;">
+        <div style="text-align: center; background: rgba(192,86,42,0.15); border: 1px solid rgba(192,86,42,0.3); padding: 18px; border-radius: 4px;">
+          <div style="font-family: 'Playfair Display', serif; font-size: 48px; font-weight: 900; color: #C0562A; line-height: 1;">3,362</div>
+          <div style="font-family: 'Montserrat', sans-serif; font-size: 11px; color: #D4C4B0; letter-spacing: 1px; margin-top: 8px;">Books challenged in US<br>schools, 2022–23</div>
+        </div>
+        <div style="text-align: center; background: rgba(192,86,42,0.08); border: 1px solid rgba(192,86,42,0.2); padding: 18px; border-radius: 4px;">
+          <div style="font-family: 'Playfair Display', serif; font-size: 48px; font-weight: 900; color: #E8873A; line-height: 1;">40+</div>
+          <div style="font-family: 'Montserrat', sans-serif; font-size: 11px; color: #D4C4B0; letter-spacing: 1px; margin-top: 8px;">US states with active<br>book restriction efforts</div>
+        </div>
+        <div style="text-align: center; background: rgba(192,86,42,0.05); border: 1px solid rgba(192,86,42,0.15); padding: 18px; border-radius: 4px;">
+          <div style="font-family: 'Playfair Display', serif; font-size: 48px; font-weight: 900; color: #C8A96E; line-height: 1;">↑</div>
+          <div style="font-family: 'Montserrat', sans-serif; font-size: 11px; color: #D4C4B0; letter-spacing: 1px; margin-top: 8px;">Record high — up from<br>729 challenges in 2021</div>
+        </div>
+      </div>
+
+      <div class="context-box">
+        <div class="context-label">Note</div>
+        The American Library Association tracks book challenges — formal requests to remove books from libraries or curricula. Most challenged books include titles addressing race, LGBTQ+ identity, sexual education, and religious diversity. Fahrenheit 451 itself has been challenged and banned in some school districts.
+      </div>
+    </div>
+
+    <div class="response-section">
+      <div class="sticky-prompt">📌 Use a sticky note to respond below each question</div>
+      <div class="response-bar"></div>
+      <div class="response-label">Your Response — What? / So What? / Now What?</div>
+      <div class="response-grid">
+        <div class="response-card">
+          <div class="response-card-label">🔍 WHAT?</div>
+          <div class="response-card-q">What does this data tell you about book banning in America today?</div>
+        </div>
+        <div class="response-card">
+          <div class="response-card-label">💡 SO WHAT?</div>
+          <div class="response-card-q">Is a book challenge the same as book burning? Where do you draw the line?</div>
+        </div>
+        <div class="response-card">
+          <div class="response-card-label">🌍 NOW WHAT?</div>
+          <div class="response-card-q">Does this change how you think about Bradbury writing F451 in 1953? Why?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     STATION 5 — Frederick Douglass Quote
+══════════════════════════════════════════════════════════════ -->
+<div class="station light">
+  <div class="accent-left"></div>
+
+  <div class="station-header">
+    <span class="station-num">Station 05</span>
+    <span class="station-type">Primary Quote</span>
+  </div>
+
+  <div class="station-body">
+    <div>
+      <span class="quotemark" style="color: #C0562A;">"</span>
+      <div class="big-quote smaller" style="color: #1C1C1E;">
+        Once you learn to read, you will be forever free.
+      </div>
+      <div style="font-family: 'Playfair Display', serif; font-size: 22px; font-style: italic; color: #1C1C1E; line-height: 1.6; margin-bottom: 20px;">
+        "Knowledge makes a man unfit to be a slave."
+      </div>
+
+      <div class="attribution" style="color: #C0562A;">— Frederick Douglass</div>
+      <div class="attribution-detail">Escaped enslaved person, abolitionist, and orator — 1817–1895</div>
+
+      <div class="context-box">
+        <div class="context-label">Historical Context</div>
+        In antebellum America, it was illegal to teach enslaved people to read. Slaveholders understood that literacy meant access to ideas, to legal arguments, to the ability to communicate across distances, and to the knowledge that one's condition was not inevitable. Douglass secretly taught himself to read as a child after his enslaver forbade it. He later called that moment — understanding why literacy was suppressed — the turning point of his life. His autobiography became one of the most powerful antislavery texts ever written.
+      </div>
+    </div>
+
+    <div class="response-section">
+      <div class="sticky-prompt" style="transform: rotate(-0.8deg);">📌 Use a sticky note to respond below each question</div>
+      <div class="response-bar"></div>
+      <div class="response-label">Your Response — What? / So What? / Now What?</div>
+      <div class="response-grid">
+        <div class="response-card">
+          <div class="response-card-label">🔍 WHAT?</div>
+          <div class="response-card-q">What connection is Douglass making between reading, knowledge, and freedom?</div>
+        </div>
+        <div class="response-card">
+          <div class="response-card-label">💡 SO WHAT?</div>
+          <div class="response-card-q">Why would those in power want to keep people from reading? What does literacy threaten?</div>
+        </div>
+        <div class="response-card">
+          <div class="response-card-label">🌍 NOW WHAT?</div>
+          <div class="response-card-q">How does Douglass's experience connect to Faber's argument about the value of books in F451?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     STATION 6 — Image: Taliban / Cultural Destruction
+══════════════════════════════════════════════════════════════ -->
+<div class="station ember">
+  <div class="accent-left"></div>
+
+  <div class="station-header">
+    <span class="station-num">Station 06</span>
+    <span class="station-type">Historical Image</span>
+  </div>
+
+  <div class="station-body">
+    <div>
+      <div class="image-area" style="border-color: rgba(245,237,214,0.5); color: rgba(245,237,214,0.7);">
+        <div class="image-area-inner">
+          <span class="image-area-icon">📷</span>
+          <span class="image-area-label" style="color: rgba(245,237,214,0.9);">ATTACH IMAGE HERE</span>
+          <span class="image-area-sub" style="color: rgba(245,237,214,0.7);">Option A: Search "Kabul Museum destroyed Taliban" (AP or Reuters)<br>Option B: Search "Afghan girls school" (before/after Taliban 2021)<br>Option C: Search "ISIS Mosul library books burned 2015" (BBC)<br>Choose an image that is impactful but not graphically violent</span>
+        </div>
+      </div>
+
+      <div class="context-box" style="border-color: rgba(245,237,214,0.5); background: rgba(0,0,0,0.15);">
+        <div class="context-label" style="color: rgba(245,237,214,0.7);">What You're Looking At</div>
+        <span style="color: rgba(245,237,214,0.9);">In 2001, the Taliban destroyed much of Afghanistan's cultural heritage, including thousands of books and manuscripts. In 2021, after returning to power, the Taliban immediately banned girls from secondary school and university education, and burned books considered "un-Islamic." In 2015, ISIS burned an estimated 8,000 books from the Mosul Public Library in Iraq, throwing manuscripts dating back to the 7th century into the streets. The pattern: destroy memory, rewrite culture.</span>
+      </div>
+    </div>
+
+    <div class="response-section">
+      <div class="sticky-prompt" style="transform: rotate(1.2deg);">📌 Use a sticky note to respond below each question</div>
+      <div class="response-bar"></div>
+      <div class="response-label" style="color: rgba(245,237,214,0.6);">Your Response — What? / So What? / Now What?</div>
+      <div class="response-grid">
+        <div class="response-card">
+          <div class="response-card-label">🔍 WHAT?</div>
+          <div class="response-card-q" style="color: rgba(245,237,214,0.85);">What is being destroyed, and what message does that destruction send?</div>
+        </div>
+        <div class="response-card">
+          <div class="response-card-label">💡 SO WHAT?</div>
+          <div class="response-card-q" style="color: rgba(245,237,214,0.85);">Why do authoritarian regimes so often target education and libraries first?</div>
+        </div>
+        <div class="response-card">
+          <div class="response-card-label">🌍 NOW WHAT?</div>
+          <div class="response-card-q" style="color: rgba(245,237,214,0.85);">Is book burning ever different in its meaning across different cultures or contexts?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     STATION 7 — Margaret Atwood / Toni Morrison Quotes
+══════════════════════════════════════════════════════════════ -->
+<div class="station dark">
+  <div class="accent-left"></div>
+  <div class="flame-decor">📖</div>
+
+  <div class="station-header">
+    <span class="station-num">Station 07</span>
+    <span class="station-type">Author's Words</span>
+  </div>
+
+  <div class="station-body">
+    <div>
+      <span class="quotemark">"</span>
+      <div class="big-quote smaller">
+        A word after a word after a word is power.
+      </div>
+
+      <div class="attribution">— Margaret Atwood</div>
+      <div class="attribution-detail">Author of <em>The Handmaid's Tale</em> — also a banned book</div>
+
+      <div style="height: 1px; background: rgba(192,86,42,0.3); margin: 28px 0;"></div>
+
+      <div style="font-family: 'Playfair Display', serif; font-size: 22px; font-style: italic; line-height: 1.6; color: #D4C4B0; margin-bottom: 12px;">
+        "If you have some power, then your job is to empower somebody else. This is not just a leadership style; it is a way of being human."
+      </div>
+      <div class="attribution" style="margin-top: 0;">— Toni Morrison</div>
+      <div class="attribution-detail">Nobel Prize-winning author — <em>Beloved</em>, <em>The Bluest Eye</em>, and others have been banned in US schools</div>
+
+      <div class="context-box">
+        <div class="context-label">Books These Authors Wrote That Have Been Banned</div>
+        Margaret Atwood's <em>The Handmaid's Tale</em> — banned for sexual content and "anti-Christian" themes. Toni Morrison's <em>Beloved</em> — challenged for "violent content" and "controversial" subject matter (American slavery). Both authors have publicly advocated against censorship.
+      </div>
+    </div>
+
+    <div class="response-section">
+      <div class="sticky-prompt">📌 Use a sticky note to respond below each question</div>
+      <div class="response-bar"></div>
+      <div class="response-label">Your Response — What? / So What? / Now What?</div>
+      <div class="response-grid">
+        <div class="response-card">
+          <div class="response-card-label">🔍 WHAT?</div>
+          <div class="response-card-q">What does Atwood mean by "A word after a word after a word is power"? Power for whom?</div>
+        </div>
+        <div class="response-card">
+          <div class="response-card-label">💡 SO WHAT?</div>
+          <div class="response-card-q">Why might someone want to ban books by Atwood or Morrison specifically?</div>
+        </div>
+        <div class="response-card">
+          <div class="response-card-label">🌍 NOW WHAT?</div>
+          <div class="response-card-q">How do these quotes connect to Faber's explanation of why books matter in F451?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════════════════
+     STATION 8 — What Would You Burn? (Reflection Station)
+══════════════════════════════════════════════════════════════ -->
+<div class="station light">
+  <div class="accent-left"></div>
+
+  <div class="station-header">
+    <span class="station-num">Station 08</span>
+    <span class="station-type">Reflection Station</span>
+  </div>
+
+  <div class="station-body">
+    <div>
+      <div style="font-family: 'Playfair Display', serif; font-size: 42px; font-weight: 900; color: #C0562A; line-height: 1; margin-bottom: 24px; letter-spacing: -1px;">
+        The Hardest<br>Question.
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 28px;">
+        <div style="background: #1C1C1E; padding: 24px; border-radius: 4px; border-top: 4px solid #C0562A;">
+          <div style="font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 700; color: #C0562A; letter-spacing: 2px; margin-bottom: 14px;">THE HYPOTHETICAL</div>
+          <div style="font-family: 'Playfair Display', serif; font-size: 18px; font-style: italic; color: #D4C4B0; line-height: 1.6;">
+            If you had to choose one idea, belief, or type of knowledge to protect at all costs — what would it be, and why?
+          </div>
+        </div>
+        <div style="background: #EDE0C4; padding: 24px; border-radius: 4px; border-top: 4px solid #1C1C1E;">
+          <div style="font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 700; color: #C0562A; letter-spacing: 2px; margin-bottom: 14px;">THE HARDER QUESTION</div>
+          <div style="font-family: 'Playfair Display', serif; font-size: 18px; font-style: italic; color: #1C1C1E; line-height: 1.6;">
+            In F451's society, most people didn't rebel. They just — didn't read. Is that the same as agreeing to burn books?
+          </div>
+        </div>
+      </div>
+
+      <div style="font-family: 'Playfair Display', serif; font-size: 22px; font-style: italic; color: #1C1C1E; border-left: 4px solid #C0562A; padding-left: 20px; line-height: 1.65; margin-bottom: 10px;">
+        "There is more than one way to burn a book. And the world is full of people running around with lit matches."
+      </div>
+      <div style="font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; color: #C0562A; letter-spacing: 1px; margin-bottom: 28px;">— Ray Bradbury, 1979 (in response to a publisher editing his work without permission)</div>
+    </div>
+
+    <div class="response-section">
+      <div class="sticky-prompt" style="transform: rotate(-1deg);">📌 This is the LAST station — write your most honest response</div>
+      <div class="response-bar"></div>
+      <div class="response-label">Your Response — What? / So What? / Now What?</div>
+      <div class="response-grid">
+        <div class="response-card">
+          <div class="response-card-label">🔍 WHAT?</div>
+          <div class="response-card-q">What is Bradbury saying in this 1979 quote? What are the "lit matches" he's referring to?</div>
+        </div>
+        <div class="response-card">
+          <div class="response-card-label">💡 SO WHAT?</div>
+          <div class="response-card-q">Is passive indifference the same as active censorship? Defend your answer.</div>
+        </div>
+        <div class="response-card">
+          <div class="response-card-label">🌍 NOW WHAT?</div>
+          <div class="response-card-q">After seeing all 8 stations: what's the most important idea you want to bring into reading this novel?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
